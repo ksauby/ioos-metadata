@@ -14,7 +14,8 @@ summary:  This is the currently active IOOS Metadata Profile version.  See links
 |:--- |:--- |:--- |
 | 1.0 | [Initial version based on the NODC Templates 1.1 and ACDD 1.1](ioos-metadata-profile-v1-0) | 2016-10-01 |
 | 1.1 | [Updated version based on the NCEI Templates 2.0 and ACDD 1.3](ioos-metadata-profile-v1-1) | 2016-11-01 |
-| **1.2** |**Currently Active Version** <br>Updated to reflect new IOOS attribution guidance and ERDDAP implementation: <br>* Add `infoUrl` and `Conventions`<br>* Make `creator_institution`, `creator_url`, `license`, `publisher_url`, and `summary` required <br>* Add `contributor_url`, `contributor_email`, and `contributor_role_vocabulary` (recommended)<br>* Make `contributor_name`, `contributor_role`, `institution`, and `publisher_name` recommended (previously were required)<br>* Clarify default vocabulary for `contributor_role` and `contributor_role_vocabulary`<br>* Clarify use of `contributor_name` and `contributor_role` for multiple contributors <br>* Restrict the profile to allow only a single Platform per dataset; clarify use of 'Platform' variable and related `platform` global and variable attributes <br> * Add global `platform_id`, `platform_name`, and `wmo_platform_code` <br>* Remove `platform_variable:ioos_code`, `platform_variable:short_name`, `platform_variable:long_name` and `platform_variable:type` <br>* Change `creator_zipcode` and `publisher_zipcode` to `creator_postalcode` and `publisher_postalcode` <br> * Add `geophysical_variable:standard_name_url`, `geophysical_variable:accuracy`, `geophysical_variable:precision`, `geophysical_variable:resolution` <br> * Add `instrument_vocabulary` <br> * Add `instrument_variable:calibration_date`, `instrument_variable:component`, `instrument_variable:make_model` <br> * Add `gts_ingest` to indicate datasets and variables intended for NDBC/GTS harvest <br> * Add `ioos_ingest` to indicate datasets intended to be harvested into IOOS national products <br> * Add [Quality Control/QARTOD](#quality-controlqartod) section describing QARTOD flag variable requirements <br> * Add [Requirements for NDBC/GTS Ingest](#requirements-for-ioos-dataset-ndbcgts-ingest) section <br> * Add `creator_institution_url` suggested attribute | **2020-01-10** |
+| 1.2 | Updated to reflect new IOOS attribution guidance and ERDDAP implementation: <br>* Add `infoUrl` and `Conventions`<br>* Make `creator_institution`, `creator_url`, `license`, `publisher_url`, and `summary` required <br>* Add `contributor_url`, `contributor_email`, and `contributor_role_vocabulary` (recommended)<br>* Make `contributor_name`, `contributor_role`, `institution`, and `publisher_name` recommended (previously were required)<br>* Clarify default vocabulary for `contributor_role` and `contributor_role_vocabulary`<br>* Clarify use of `contributor_name` and `contributor_role` for multiple contributors <br>* Restrict the profile to allow only a single Platform per dataset; clarify use of 'Platform' variable and related `platform` global and variable attributes <br> * Add global `platform_id`, `platform_name`, and `wmo_platform_code` <br>* Remove `platform_variable:ioos_code`, `platform_variable:short_name`, `platform_variable:long_name` and `platform_variable:type` <br>* Change `creator_zipcode` and `publisher_zipcode` to `creator_postalcode` and `publisher_postalcode` <br> * Add `geophysical_variable:standard_name_url`, `geophysical_variable:accuracy`, `geophysical_variable:precision`, `geophysical_variable:resolution` <br> * Add `instrument_vocabulary` <br> * Add `instrument_variable:calibration_date`, `instrument_variable:component`, `instrument_variable:make_model` <br> * Add `gts_ingest` to indicate datasets and variables intended for NDBC/GTS harvest <br> * Add `ioos_ingest` to indicate datasets intended to be harvested into IOOS national products <br> * Add [Quality Control/QARTOD](#quality-controlqartod) section describing QARTOD flag variable requirements <br> * Add [Requirements for NDBC/GTS Ingest](#requirements-for-ioos-dataset-ndbcgts-ingest) section <br> * Add `creator_institution_url` suggested attribute | **2020-01-10** |
+| **1.2.1** |**Currently Active Version** <br> Added tips. Bold font applied to attribute names which are required. Converted examples to CDL. Removed some examples from the tables and expanded examples outside of the tables. Divided attribution section into subsections by attribution type. | **2020-01-10** |
 
 ## Notes/Caveats
 
@@ -39,6 +40,15 @@ summary:  This is the currently active IOOS Metadata Profile version.  See links
 1. For in situ observation datasets, the IOOS Profile allows only one **'platform'** per dataset.  Please see the corresponding [Platform](#platform) section of the profile below for more information.
 
 2. The [**U.S. IOOS National Glider Data Assembly Center**](https://gliders.ioos.us/) currently uses a slightly different [netCDF File Format (V2)](https://ioos.github.io/glider-dac/ngdac-netcdf-file-format-version-2.html); work is in progress to harmonize the NGDAC File Format and IOOS Metadata Profile.
+
+## Tips
+
+Not all variables have CF standard names (e.g., profile_id). Make sure that standard_name attributes are only included for those variables for which standard names exist.
+
+Pay careful attention to dimensionality. For example, with few exceptions, platform and instrument should have dimensionality of 1.
+
+Use the IOOS Compliance Checker and make changes so that the file meets the requirements as outlined by the IOOS Metadata Profile. Data providers are also strongly encouraged to make sure that the file includes all recommended variables and attributes outlined in the profile.
+
 
 
 ## Gold Standard Example Datasets
@@ -215,8 +225,7 @@ The IOOS Metadata Profile requires that measurements come from **a single physic
 More information about CF DSG and associated requirements is available in [CF Documentation - Chapter 9](http://cfconventions.org/Data/cf-conventions/cf-conventions-1.7/cf-conventions.html#discrete-sampling-geometries).
 <br><br>
 
-- The only datasets that are exempt from this rule are *those that do not adhere to the [CF Discrete Sampling Geometries guidelines](https://cfconventions.org/Data/cf-conventions/cf-conventions-1.7/cf-conventions.html#discrete-sampling-geometries) (e.g. gridded model outputs or other gridded datasets).* Attributes in this section can be omitted for such datasets and still be compliant with this profile.
-  - E.g., [hourly gridded surface current total vector velocity data assembled by the IOOS High-Frequency Radar (HFR) Data Assembly Center (DAC)](https://hfradar.ioos.us/hfrnet/)
+- The only datasets that are exempt from this rule are *those that do not adhere to the [CF Discrete Sampling Geometries guidelines](https://cfconventions.org/Data/cf-conventions/cf-conventions-1.7/cf-conventions.html#discrete-sampling-geometries) (such as the [hourly gridded surface current total vector velocity data assembled by the IOOS High-Frequency Radar (HFR) Data Assembly Center (DAC)](https://hfradar.ioos.us/hfrnet/)).* Attributes in this section can be omitted for such datasets and still be compliant with this profile.
 - While ERDDAP dataset aggregation is encouraged as a way to streamline access for end users to related datasets, *IOOS will not harvest aggregated datasets into upstream national products, nor will NDBC harvest them for GTS publication.*  Therefore, you should set **`gts_ingest=false`** and **`ioos_ingest=false`** flags on any ERDDAP aggregated datasets.
 
 **One platform per dataset:** The IOOS Metadata Profile restricts datasets to contain only a **single physical observing platform per dataset** (e.g. buoy, glider, station, or anything that might be assigned a WMO ID).  This simplifies the dataset structure significantly, and it allows the use of several global attributes to specify platform metadata that might otherwise be found in platform container variable(s) (e.g. **`platform_id`** and **`platform_name`**, as well as the OceanSITES-derived **`wmo_platform_code`**).  It also simplifies the creation of aggregated datasets at the ERDDAP level to create groups of individual platform datasets.
@@ -224,12 +233,12 @@ More information about CF DSG and associated requirements is available in [CF Do
 
 #### Platform Global Attributes
 
-The following table lists required and recommended global attributes that help describe the platform from which measurement are taken.
+The following table lists required and recommended global attributes that describe the platform from which measurement are taken.
 
 Name | Convention | Description | Role
 :--------- | :-------: | :------------------- | :-------:
-**featureType** | CF |  A [CF Discrete Sampling Geometries (DSG)](http://cfconventions.org/Data/cf-conventions/cf-conventions-1.7/cf-conventions.html#discrete-sampling-geometries) value that is defined by the presence of and relationships among the spatiotemporal coordinates within a dataset (i.e., latitude, longitude, altitude/depth, and/or time).<br><br>For example,<br> A `timeSeries` is defined as a "series of data points at the same spatial location with monotonically increasing time" - in other words, data is measured over time at a fixed horizontal and vertical location in space.<br>In contrast, a `profile` is defined as "an ordered set of data points along a vertical line at a fixed horizontal position and fixed time." In this case, data is measured at different vertical locations at a fixed horizontal position and at a single point in time.| **required**
-**platform** | ACDD |  A single string (no spaces) giving the name of the platform container variable, whose value has been taken from the controlled vocabulary identified in the global attribute `platform_vocabulary`. Platforms can be of any type, including buoy, satellite, ship, station, aircraft, or other. | **required**
+**featureType** | CF |  A [CF Discrete Sampling Geometries (DSG)](http://cfconventions.org/Data/cf-conventions/cf-conventions-1.7/cf-conventions.html#discrete-sampling-geometries) value that is defined by the presence of and relationships among the spatiotemporal coordinates within a dataset (i.e., latitude, longitude, altitude/depth, and/or time).| **required**
+**platform** | ACDD | A single string (no spaces) giving the type of object (i.e., platform) from which data was recorded, and whose value has been taken from the controlled vocabulary identified in the global attribute `platform_vocabulary`. A platform can be identified as one of many different types, including `moored_buoy`, `aircraft`, `tide_station` (when using the [IOOS Platform Category vocabulary](https://mmisw.org/ont/ioos/platform)),  `ship`, `cetacean`, or `fish` (when using the [NERC SeaVoX Platform Categories vocabulary](https://vocab.nerc.ac.uk/collection/L06/current/)). | **required**
 **platform_name** | IOOS | A descriptive, long name for the platform from which the data was collected. The value of **`platform_name`** will be used to label the platform in downstream applications, such as IOOS' National Products (Environmental Sensor Map, EDS, etc). | **required**
 **platform_vocabulary** | ACDD | The controlled vocabulary from which the value in the `platform` global attribute was derived, ideally given as a URL, pointing to either the [IOOS Platform Category vocabulary](https://mmisw.org/ont/ioos/platform) or [NERC SeaVoX Platform Categories vocabulary](https://vocab.nerc.ac.uk/collection/L06/current/). <br><br>It is important to note that the IOOS Metadata Profile, in contrast to the the NCEI Templates 2.0, **does not** allow the use of the "NASA GCMD Platform Keywords 8.1" as a **`platform_vocabulary`**.  The **`platform`** global attribute is used to generate the [IOOS Asset Identifier 1.0](https://ioos.github.io/conventions-for-observing-asset-identifiers/ioos-assets-v1-0.html) for the dataset, and thus requires a single string platform name with no blank characters.  GCMD Platform Keywords do not follow this pattern.  See the [Rules for Asset Identifier Generation](#rules-for-ioos-asset-identifier-generation) for more information. | **required**
 **<span id="wmo_platform_code_link">wmo_platform_code</span>** | IOOS | The WMO identifier for the platform used to measure the data.  This identifier can be any of the following types:<br>{::nomarkdown}<ul><li>WMO ID for buoys (numeric, 5 digits)</li><li>WMO ID for gliders (numeric, 7 digits)</li><li>NWS ID (alphanumeric, 5 digits)</li></ul>{:/} When a dataset is assigned a **`wmo_platform_code`** it is thereby assigned a secondary Asset Identifier for the **'wmo' `naming_authority`**.  See the  [Rules for Asset Identifier Generation](#rules-for-ioos-asset-identifier-generation) for more information. | **required**, if applicable
@@ -301,30 +310,19 @@ variables:
 
 #### Variables
 
-  <br> <br> **`cf_role`** may be applied to the 'Platform Variable', as indicated by **`[geophysical_variable]:platform`**, but it may also be an independent variable.  <br><br>Example: `cf_role = "timeseries_id"`
-  
-To comply with the **single platform per dataset** rule of the IOOS Metadata Profile, the **`cf_role`** variable will typically have a dimension of 1, unless it is a TimeSeries dataset following the 'TimeSeries - multiple-station' format.
+Each dataset should contain a single platform container variable (represented here by `[platform_container_variable]`), named `station`, `platform`, or something else informative, which can then referenced by geophysical variables. The variable should have a dimension of 1, with ONLY ONE EXCEPTION (SEE BELOW)?
 
 Each dataset may only contain one platform container variable. 
 
-
-#### Variable Attributes
-
+The string `[geophysical_variable]` is used in the table below as a placeholder for the actual geophysical variable name.
+The string `[DSG_variable]` is used in the table below as a placeholder for the actual variable that contains information about the type of [CF Discrete Sampling Geometry  (DSG)](http://cfconventions.org/Data/cf-conventions/cf-conventions-1.7/cf-conventions.html#discrete-sampling-geometries) represented by the dataset.
 
 Name | Convention | Description | Type | Role
 :--------- | :-------: | :------------------- | :--------: | :-------:
-**[platform_container_variable]:cf_role** | CF | Identifier for the CF DSG [featureType](http://cfconventions.org/Data/cf-conventions/cf-conventions-1.7/cf-conventions.html#_features_and_feature_types) of the dataset, determined by the `featureType` global attribute. Allowed values include 'timeseries_id,' 'profile_id,' and 'trajectory_id.' | variable | **required**
-**[geophysical_variable]:platform** | NCEI |Each data variable in the dataset must include a **`platform`** attribute, containing the name of the variable `[platform_container_variable]` that describes the platform used to measure the data in the dataset.| variable | **required**
-**[geophysical_variable]:cf_role** | CF | Identifier for the CF DSG [featureType](http://cfconventions.org/Data/cf-conventions/cf-conventions-1.7/cf-conventions.html#_features_and_feature_types) of the dataset, determined by the `featureType` global attribute, and applied to geophysical variables that help determine a dataset's `featureType` (e.g., `latitude`, `longitude`, `altitude`, `time`) . Allowed values include 'timeseries_id,' 'profile_id,' and 'trajectory_id.' | variable | optional
-
-
+**[platform_container_variable or DSG_variable]:cf_role** | CF | Identifier for the CF DSG [featureType](http://cfconventions.org/Data/cf-conventions/cf-conventions-1.7/cf-conventions.html#_features_and_feature_types) of the dataset, determined by the `featureType` global attribute. Allowed values include 'timeseries_id,' 'profile_id,' and 'trajectory_id.' The variable for which `cf_role` is an attribute will typically have a dimension of 1 to comply with the **single platform per dataset** rule of the IOOS Metadata Profile. <br><br>The `cf_role` attribute can be applied to either the `[platform_container_variable]` (e.g., [as an attribute of the `station_name` variable](https://cfconventions.org/cf-conventions/cf-conventions.html#a-domain-containing-a-timeseries-of-station-data-in-the-indexed-ragged-array-representation)) or a DSG variable (e.g., where the [`cf_role = "timeseries_id"` attribute is applied to the variable `timeSeries`](https://www.ncei.noaa.gov/thredds-ocean/catalog/example/v2.0/catalog.html?dataset=example/v2.0/NCEI_timeSeries_template_v2.0_2016-09-22_181830.715665.nc), or where the [`cf_role = "profile_id"` attribute is applied to the variable `profile`](https://cfconventions.org/cf-conventions/cf-conventions.html#example-h.19)).https://github.com/ioos/erddap-gold-standard/blob/main/datasets/edu_calpoly_marine_morro_bay_met.cdl| variable | **required**
+**[geophysical_variable]:platform** | NCEI | Each data variable in the dataset must include a `platform` attribute, containing the name of the variable `[platform_container_variable]` that describes the platform used to measure the data in the dataset.| variable | **required**
 
 #### Example
-
-
-
-
-
 
 
 ```
@@ -350,6 +348,141 @@ HF-Radar
   :platform = "CODAR SeaSonde, COASTAL STATIONS";
   :platform_vocabulary = "Global Change Master Directory (GCMD) Keywords, Version 21.2";
 ```
+
+
+
+
+#### `featureType` Scenarios
+
+Recommendations on the specific CF DSG featureTypes to use for different platform instrumentation scenarios include the follows:
+
+##### A single buoy or station measuring data at a fixed depth/height
+
+In this scenario, the buoy or station has one of the two following sensor setups:
+
+- a single sensor package, or 
+- multiple sensor packages, all of which have been placed at the same vertical (height/depth) position and all record data with the same sampling frequency.
+
+Regardless of the sensor setup, the location (as defined by its latitude, longitude, and altitude/depth) is fixed while data is measured at different points in time.
+
+For this scenario, set the:
+
+- `featureType` global attribute to [`timeSeries`](http://cfconventions.org/cf-conventions/cf-conventions.html#time-series-data), and
+- `[platform_container_variable]` dimensions to 1.
+
+The following example in [CDL](https://docs.unidata.ucar.edu/nug/2.0-draft/cdl.html) illustrates how this information may be stored in the netCDF file:
+
+```
+dimensions:
+  timeseries = 10;
+  station = 1;
+
+variables:
+  string station(station) ;
+    station:cf_role = "timeseries_id" ;
+
+  double time(timeseries) ;
+    time:standard_name = "time" ;
+    time:long_name = "time of measurement" ;
+    time:units = "days since 1970-01-01 00:00:00" ;
+
+  double lat(station) ;
+    lat:_FillValue = -9999.0 ;
+    lat:long_name = "Latitude" ;
+    lat:standard_name = "latitude" ;
+    lat:units = "degrees_north" ;
+
+  double lon(station) ;
+    lon:_FillValue = -9999.0 ;
+    lon:long_name = "Longitude" ;
+    lon:standard_name = "longitude" ;
+    lon:units = "degrees_east" ;
+      
+  float Temperature(timeseries) ;
+    Temperature:standard_name = "air_temperature" ;
+    Temperature:units = "C" ;
+    Temperature:platform = "station" ;
+
+// global attributes:
+:featureType = "timeSeries";
+:platform = "buoy";
+:platform_vocabulary = "IOOS Platform Vocabulary, https://mmisw.org/ont/ioos/platform";
+:platform_name = "Fake Buoy in Tampa Bay, Florida";
+:platform_id = "GCOOS_fake1";
+:wmo_platform_code = "12345";
+```
+
+##### A single buoy or station measuring data at multiple depths/heights or different sampling frequencies
+
+In this scenario, the buoy or station has one of the two following sensor setups:
+
+- multiple sensors at different vertical (depth/height) positions, or 
+- multiple sensors with different sampling frequencies.
+
+In other words, the location (as defined by its latitude and longitude) is fixed while data is measured at different points in time, and possibly at different vertical positions.
+
+Follow one of the three options below to describe the platform in the netCDF file:
+
+- Set the `featureType` global attribute to [`timeSeries`](http://cfconventions.org/cf-conventions/cf-conventions.html#time-series-data) and set the `[platform_container_variable]` dimension to the number of sensors, or
+- Set the `featureType` global attribute to [`timeSeriesProfile`](http://cfconventions.org/cf-conventions/cf-conventions.html#time-series-profiles) and set the `[platform_container_variable]` dimension to 1.
+- Break the dataset into multiple files by sensor, with all files having matching **`platform_id`** and **`wmo_platform_code`** global attributes that can be used to link the datasets.
+  - Some IOOS RAs use this pattern already, and provide one dataset per sensor (e.g., [GLOS](https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.nodc:IOOS-GLOS)) or sensor package (e.g., CTD, ADCP, met, etc).  The code used to ingest sensor datasets for GTS by NDBC or for Sensor Map by IOOS will perform this aggregation, so data providers need not create aggregations in ERDDAP.  Each individual dataset intended for the GTS must follow the [Reququirements for NDBC/GTS Ingest](#requirements-for-ioos-dataset-ndbcgts-ingest) individually.
+  - Note that because neither **`platform_id`** or **`wmo_platform_code`** attributes are required in this profile, any dataset without them will be considered to be specifying data for only one, distinct platform, and aggregation with other datasets by downstream processes at NDBC or IOOS is not guaranteed.   
+
+```
+dimensions:
+  timeseries = 10;
+  station = 1;
+
+variables:
+  string station(station);
+    station::cf_role = "timeseries_id";
+
+  double time(timeseries) ;
+    time:standard_name = "time" ;
+    time:long_name = "time of measurement" ;
+    time:units = "days since 1970-01-01 00:00:00" ;
+
+  double lat(station);
+    lat:_FillValue = -9999.0;
+    lat:long_name = "Latitude";
+    lat:standard_name = "latitude";
+    lat:units = "degrees_north";
+
+  double lon(station);
+    lon:_FillValue = -9999.0;
+    lon:long_name = "Longitude";
+    lon:standard_name = "longitude";
+    lon:units = "degrees_east";
+      
+  float Temperature(timeseries) ;
+    Temperature:standard_name = "air_temperature";
+    Temperature:units = "C";
+    Temperature:platform = "station";
+    
+// global attributes:
+:featureType = "timeSeries";
+:platform = "buoy";
+:platform_vocabulary = "IOOS Platform Vocabulary, https://mmisw.org/ont/ioos/platform";
+:platform_name = "Fake Buoy in Tampa Bay, Florida";
+:platform_id = "GCOOS_fake1";
+:wmo_platform_code = "12345";
+```
+
+##### A Series of Individual Profiles Taken Along a Path
+
+ [A DSG TrajectoryProfile feature](http://cfconventions.org/cf-conventions/cf-conventions.html#trajectory-profiles) represents a series of individual profiles taken along a path across the Earth's surface.  In this scenario, set the dimension of the TrajectoryProfile to 1 to indicate a single trajectory feature (glider, ship, or other platform) per dataset.
+
+
+#### Tips
+
+Make sure that the platform variable is referenced by relevant geophysical variables.
+
+Likewise, make sure to include the platform container variable that is referenced in geophysical attributes. The value in the attribute and the name of the platform variable should be identical.
+
+The platform variable should have a dimensionality of 1. A larger dimension means that the file is taking up unnecessary space.
+
+Make sure that platform attributes are recognized by IOOS.
 
 
 ### Instrument
@@ -379,14 +512,14 @@ For example, A CTD instrument can be documented in the global attributes as seen
 
 #### Create and describe an instrument container variable, which is then referenced by geophysical variables
 
-1. Create an instrument container variable, named `instrument` or something else that makes sense.
-2. Assign the following variable attributes to the instrument container variable. The string `[instrument_container_variable]` is used in the table below as a placeholder for the actual instrument container variable name.
+1. Create one or more instrument container variables, as necessary, named `instrument`, `instrument1`, `instrument2`, etc., or something else that makes sense. With FEW EXCEPTIONS, the container variables should have a dimension of 1.
+2. Assign the following variable attributes to each instrument container variable. The string `[instrument_container_variable]` is used in the table below as a placeholder for the actual instrument container variable name.
 
       Name | Convention | Description | Type | Role
       :--------- | :-------: | :------------------- | :--------: | :-------:
-      [instrument_container_variable]:calibration_date | IOOS | The date the instrument was last calibrated. Value should be specified using [ISO\-8601 compatible strings](https://www.iso.org/iso-8601-date-and-time-format.html. | variable | recommended
+      [instrument_container_variable]:calibration_date | IOOS | The date the instrument was last calibrated. Value should be specified using [ISO\-8601 compatible strings](https://www.iso.org/iso-8601-date-and-time-format.html). | variable | recommended
       [instrument_container_variable]:component | IOOS | A string identifying an individual, distinct component or sub-asset on a single platform (for example, one of two different sensor types). | variable |  recommended, if applicable
-      [instrument_container_variable]:discriminant | IOOS | A string that uniquely identifies a physical sensor, for the case in which multiple sensors of the same make and model (e.g., that have identical **`make_model`** values) are deployed on a platform. | variable | recommended, if applicable
+      [instrument_container_variable]:discriminant | IOOS | A string that uniquely identifies a physical sensor when multiple sensors of the same make and model (e.g., that have identical **`make_model`** values) are deployed on a platform. | variable | recommended, if applicable
       [instrument_container_variable]:make_model | IOOS | A string giving the make and model of the instrument. | variable |  recommended
       
       The inclusion of the instrument container variable attributes **`component`** and **`discriminant`** allow for compliance with the [IOOS Convention for Asset Identification](https://ioos.github.io/conventions-for-observing-asset-identifiers/) by further qualifying the resulting Asset Identifier for measured variables.
@@ -395,7 +528,7 @@ For example, A CTD instrument can be documented in the global attributes as seen
 
       Name | Convention | Description | Type | Role
       :--------- | :-------: | :------------------- | :--------: | :-------:
-      [geophysical_variable]:instrument | NCEI |A string attribute to be specified on **each** **`geophysical variable`** that identifies the instrument that collected the data.  The value of the attribute should be set to the name of the instrument container variable that contains the details of the instrument.<br><br> There can be multiple instruments involved depending on if all the instances of the featureType in the collection come from the same instrument or not. If multiple instruments are involved, a variable should be defined for each instrument and referenced from the **`geophysical variable`** in a comma separated string. | variable | recommended
+      [geophysical_variable]:instrument | NCEI |A string attribute applied to **each** **`geophysical variable`** to identify the instrument that collected the data.  The value of the attribute should be set to the name of the instrument container variable that contains the details of the instrument.<br><br> If multiple instruments were used to measure data, reference each instrument container variable in a comma-separated string. | variable | recommended
 
 For example, the instrument container variables `temperature_sensor_top` and `temperature_sensor_bottom` contain attribute information about the instruments, and in the geophysical variable `sea_water_temperature_top` and `sea_water_temperature_bottom` the corresponding instrument container variables are referenced in the attribute `instrument`.
 
@@ -414,6 +547,16 @@ variables:
     temperature_sensor_bottom: make_model = "Nortek ADP 514"
     temperature_sensor_bottom:discriminant = "bottom";
 ```
+
+#### Tips
+
+Make sure that the instrument variable is referenced by relevant geophysical variables.
+
+Likewise, make sure to include the instrument container variable that is referenced in geophysical attributes. The value in the attribute and the name of the instrument variable should be identical.
+
+The instrument value should have a dimensionality of 1. A larger dimension means that the file is taking up unnecessary space.
+
+Make sure that instrument attributes are recognized by IOOS.
 
 
 ### Quality Control/QARTOD
