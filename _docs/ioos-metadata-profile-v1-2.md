@@ -310,7 +310,7 @@ variables:
 
 #### Variables
 
-Each dataset should contain a single platform container variable (represented here by `[platform_container_variable]`), named `station`, `platform`, or something else informative, which can then referenced by geophysical variables. The variable should have a dimension of 1, with ONLY ONE EXCEPTION (SEE BELOW)?
+Each dataset should contain a single platform container variable (represented here by `[platform_container_variable]`), named `station`, `platform`, or something else informative, which can then referenced by geophysical variables. The variable should have a dimension of 1, with rare exceptions (e.g., using the dimension to note the number of sensors along a vertical axis at a fixed latitude and longitude, as described in the `featureType` scenario [A single buoy or station measuring data at multiple depths/heights or different sampling frequencies](#a-single-buoy-or-station-measuring-data-at-multiple-depthsheights-or-different-sampling-frequencies) below.
 
 Each dataset may only contain one platform container variable. 
 
@@ -358,12 +358,10 @@ Recommendations on the specific CF DSG featureTypes to use for different platfor
 
 ##### A single buoy or station measuring data at a fixed depth/height
 
-In this scenario, the buoy or station has one of the two following sensor setups:
+In this scenario, the buoy or station is located at a fixed point in space (as defined by its latitude, longitude, and altitude/depth) while data is measured at different points in time. It can have one of the two following sensor setups:
 
 - a single sensor package, or 
 - multiple sensor packages, all of which have been placed at the same vertical (height/depth) position and all record data with the same sampling frequency.
-
-Regardless of the sensor setup, the location (as defined by its latitude, longitude, and altitude/depth) is fixed while data is measured at different points in time.
 
 For this scenario, set the:
 
@@ -414,20 +412,19 @@ variables:
 
 ##### A single buoy or station measuring data at multiple depths/heights or different sampling frequencies
 
-In this scenario, the buoy or station has one of the two following sensor setups:
+In this scenario, the buoy or station is located at a fixed point in space (as defined by its latitude and longitude), while data is measured at different points in time, and possibly at different vertical positions. It can have one of the two following sensor setups:
 
 - multiple sensors at different vertical (depth/height) positions, or 
 - multiple sensors with different sampling frequencies.
-
-In other words, the location (as defined by its latitude and longitude) is fixed while data is measured at different points in time, and possibly at different vertical positions.
 
 Follow one of the three options below to describe the platform in the netCDF file:
 
 - Set the `featureType` global attribute to [`timeSeries`](http://cfconventions.org/cf-conventions/cf-conventions.html#time-series-data) and set the `[platform_container_variable]` dimension to the number of sensors, or
 - Set the `featureType` global attribute to [`timeSeriesProfile`](http://cfconventions.org/cf-conventions/cf-conventions.html#time-series-profiles) and set the `[platform_container_variable]` dimension to 1.
 - Break the dataset into multiple files by sensor, with all files having matching **`platform_id`** and **`wmo_platform_code`** global attributes that can be used to link the datasets.
-  - Some IOOS RAs use this pattern already, and provide one dataset per sensor (e.g., [GLOS](https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.nodc:IOOS-GLOS)) or sensor package (e.g., CTD, ADCP, met, etc).  The code used to ingest sensor datasets for GTS by NDBC or for Sensor Map by IOOS will perform this aggregation, so data providers need not create aggregations in ERDDAP.  Each individual dataset intended for the GTS must follow the [Reququirements for NDBC/GTS Ingest](#requirements-for-ioos-dataset-ndbcgts-ingest) individually.
+ - The code used to ingest sensor datasets for GTS by NDBC or for Sensor Map by IOOS will perform this aggregation, so data providers need not create aggregations in ERDDAP.  Each individual dataset intended for the GTS must follow the [Requirements for NDBC/GTS Ingest](#requirements-for-ioos-dataset-ndbcgts-ingest) individually.
   - Note that because neither **`platform_id`** or **`wmo_platform_code`** attributes are required in this profile, any dataset without them will be considered to be specifying data for only one, distinct platform, and aggregation with other datasets by downstream processes at NDBC or IOOS is not guaranteed.   
+  - Some IOOS RAs use this pattern already, and provide one dataset per sensor, sensor package (e.g., CTD or ADCP), and/or depth. For example, data from the NERACOOS buoy A0139 was divided into multiple datasets by sensor package (including [CTD](https://www.ncei.noaa.gov/thredds-ocean/catalog/ioos/neracoos/UMaine/A01/catalog.html?dataset=ioos/neracoos/UMaine/A01/A0139.ocean.001m.merged.nc), [ADCP](https://www.ncei.noaa.gov/thredds-ocean/catalog/ioos/neracoos/UMaine/A01/catalog.html?dataset=ioos/neracoos/UMaine/A01/A0139.currents.adcp.merged.nc), and [meteorological measurements]((https://www.ncei.noaa.gov/thredds-ocean/catalog/ioos/neracoos/UMaine/A01/catalog.html?dataset=ioos/neracoos/UMaine/A01/A0139.met.merged.nc)) and by depth (including at a depth of [2 m](https://www.ncei.noaa.gov/thredds-ocean/catalog/ioos/neracoos/UMaine/A01/catalog.html?dataset=ioos/neracoos/UMaine/A01/A0139.ocean.002m.merged.nc) and [51 meters](https://www.ncei.noaa.gov/thredds-ocean/catalog/ioos/neracoos/UMaine/A01/catalog.html?dataset=ioos/neracoos/UMaine/A01/A0139.ocean.051m.merged.nc)). GLOS provides data by sensor (e.g., for [GLOS buoy 45013](https://www.ncei.noaa.gov/thredds-ocean/catalog/ioos/glos/45013/catalog.html), a file per variable per time period is provided).
 
 ```
 dimensions:
